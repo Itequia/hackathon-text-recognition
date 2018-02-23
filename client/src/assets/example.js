@@ -1,4 +1,4 @@
-{
+export const data = {
 	"status": "Succeeded",
 	"succeeded": true,
 	"failed": false,
