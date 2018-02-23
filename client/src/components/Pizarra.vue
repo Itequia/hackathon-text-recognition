@@ -1,24 +1,37 @@
 <template>
   <div class="pizarra">
     <h3> {{msg}} </h3>
-    <TextBox startText="Esto es una caja de texto" jsonStartx="100" jsonStarty="200"/>
-    <TextBox startText="Esto es una caja de texto" jsonStartx="400" jsonStarty="400"/>
-    <TextBox startText="Esto es una caja de texto" jsonStartx="900" jsonStarty="800"/>
-    <TextBox startText="Esto es una caja de texto" jsonStartx="1300" jsonStarty="600"/>
-    <TextBox startText="Esto es una caja de texto" jsonStartx="1500" jsonStarty="1000"/>
-    
+    <TextBox v-for="line in lines" :startText="line.text" :jsonStartx="line.left" :jsonStarty="line.top"/>
+  
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import TextBox from './TextBox'
+import TextBox from './TextBox';
+import fakedata from '../assets/fake-data.json'
+
+import Line from '../models/Line'
 
 @Component({
   components: { TextBox }
 })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+  private lines: Line[] = []
+
+  mounted () {
+    // console.log(fakedata);
+    this.generateLinesFromJson()
+  }
+
+  generateLinesFromJson () {
+    this.lines = fakedata.recognitionResult.lines.map(line => {
+      return new Line(line.boundingBox[1], line.boundingBox[0], line.text)
+    })
+    console.log(this.lines);
+  }
 }
 </script>
 

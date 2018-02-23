@@ -19,9 +19,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class TextBox extends Vue {
   @Prop() startText: string;
-  @Prop() jsonStartx: string;
-  @Prop() jsonStarty: string;
+  @Prop() jsonStartx: number;
+  @Prop() jsonStarty: number;
 
+  private text: string = ''
   private isMoving: boolean = false
   private x: number = 0
   private y: number = 0
@@ -31,8 +32,8 @@ export default class TextBox extends Vue {
 
   
   	mounted() {
-  		this.startx = parseInt(this.jsonStartx)
-  		this.starty = parseInt(this.jsonStarty)
+  		this.startx = this.jsonStartx
+  		this.starty = this.jsonStarty
   		this.text = this.startText
   		this.x = this.startx
   		this.y = this.starty
